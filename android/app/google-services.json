@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "224831744817",
+    "firebase_url": "https://automatic-irrigation-sys-8f477-default-rtdb.firebaseio.com",
+    "project_id": "automatic-irrigation-sys-8f477",
+    "storage_bucket": "automatic-irrigation-sys-8f477.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224831744817:android:cf2ee66bef507125dcde10",
+        "android_client_info": {
+          "package_name": "com.rn_login_signup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpzo04G1ZALRzQx4xosxxbNpNPP3yZcgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

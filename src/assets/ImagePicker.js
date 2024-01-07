@@ -1,56 +1,53 @@
-import React, { useState } from 'react';
-import { View, Button, Image, Alert, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 //import ImagePicker from 'react-native-image-picker';
 var ImagePicker = require('react-native-image-picker');
 
-const ImagePick = () =>{
-    const options = {
-        title: 'Select Image',
-        storageOptions: {
-          skipBackup: true,
-          path: 'images',
-        },
-      };
-    const selectImage = () =>{
-        ImagePicker.launchImageLibrary(options, (response) => {
-            if(response.didCancel){
-                console.log('user canceld image picker');
-            } 
-            else if(response.error)
-            {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else{
-                const source = {uri: response.uri};
-            }
-        });
-    };
-return (
+const ImagePick = ({onImageSelect}) => {
+  const options = {
+    title: 'Select Image',
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    },
+  };
+  const selectImage = callback => {
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('user canceld image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const source = response.assets[0].uri;
+        onImageSelect(source);
+      }
+    });
+  };
+  return (
     <TouchableOpacity
-    onPress={selectImage}
+      onPress={selectImage}
       style={{
-    borderRadius: 100,
-    width: '78%',
-    backgroundColor: '#D5E8D4',
-    marginTop: 10,
-    alignItems: "center",
-    display: 'flex', 
-    flexDirection :'row',
-    paddingLeft: 15,
-    paddingVertical:15,
+        borderRadius: 100,
+        width: '78%',
+        backgroundColor: '#D5E8D4',
+        marginTop: 10,
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        paddingLeft: 15,
+        paddingVertical: 15,
       }}>
-        <View>
+      <View>
         <Text style={styles.buttonText}>Select Image</Text>
       </View>
     </TouchableOpacity>
-);
+  );
 };
 
 const styles = StyleSheet.create({
-    buttonText: {
-        
+  buttonText: {
     color: '#60A917',
-    },
-  });
+  },
+});
 
 export default ImagePick;
