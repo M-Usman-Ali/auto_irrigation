@@ -14,11 +14,11 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name="Cropdetail" component={Cropdetail} /> */}
+      <Stack.Screen name="Crops" component={Crops} />
+        <Stack.Screen name="Cropdetail" component={Cropdetail} />
       {/* <Stack.Screen name="ImagePick" component={ImagePick} /> */}
       <Stack.Screen name="Addcrops" component={Addcrops} />
         {/* <Stack.Screen name="SelectedCrops" component={SelectedCrops} /> */}
-        {/* <Stack.Screen name="Crops" component={Crops} /> */}
         {/* <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} /> */}
         

@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Platform, DatePickerAndroid } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
+  DatePickerAndroid,
+  FlatList,
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {useRoute} from '@react-navigation/native';
+import {getCropDetail} from '../APIs';
 
 const Cropdetail = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -8,10 +17,16 @@ const Cropdetail = () => {
   const [showStartDatePicker, setShowStartDatePicker] = useState(false);
   const [showEndDatePicker, setShowEndDatePicker] = useState(false);
   const [totalTime, setTotalTime] = useState(null);
+  const route = useRoute();
+  const [cropDetail, setCropDetail] = useState([]);
 
   useEffect(() => {
     // Calculate total time when start or end date changes
-    calculateTotalTime();
+    getCropDetail(data => {
+      if (data?.length > 0) {
+        setCropDetail(data);
+      }
+    }, route?.params?.crop?.id);
   }, [startDate, endDate]);
 
   const calculateTotalTime = () => {
@@ -46,7 +61,12 @@ const Cropdetail = () => {
 
   return (
     <View>
-      <TouchableOpacity onPress={Platform.OS === 'ios' ? showStartDatePickerIOS : showStartDatePickerAndroid}>
+      <TouchableOpacity
+        onPress={
+          Platform.OS === 'ios'
+            ? showStartDatePickerIOS
+            : showStartDatePickerAndroid
+        }>
         <Text>Start Date: {startDate.toDateString()}</Text>
       </TouchableOpacity>
 
@@ -59,7 +79,12 @@ const Cropdetail = () => {
         />
       )}
 
-      <TouchableOpacity onPress={Platform.OS === 'ios' ? showEndDatePickerIOS : showEndDatePickerAndroid}>
+      <TouchableOpacity
+        onPress={
+          Platform.OS === 'ios'
+            ? showEndDatePickerIOS
+            : showEndDatePickerAndroid
+        }>
         <Text>End Date: {endDate.toDateString()}</Text>
       </TouchableOpacity>
 
@@ -72,9 +97,25 @@ const Cropdetail = () => {
         />
       )}
 
-<Text>Total Time: {totalTime !== null ? totalTime.toFixed(2) + ' hours' : 'N/A'}</Text>
+      <Text>
+        Total Time:{' '}
+        {totalTime !== null ? totalTime.toFixed(2) + ' hours' : 'N/A'}
+      </Text>
 
       {/* Add time input fields or any other UI elements as needed */}
+      <FlatList
+        data={cropDetail}
+        renderItem={({item}) => {
+          return (
+            <View style={{marginVertical: 19}}>
+              <Text>Start Time: {item?.start_time}</Text>
+              <Text>End Time: {item?.end_time}</Text>
+              <Text>Total Time: {item?.total_time}</Text>
+              <Text>Fertilizer: {item?.fertilizer}</Text>
+            </View>
+          );
+        }}
+      />
     </View>
   );
 };
